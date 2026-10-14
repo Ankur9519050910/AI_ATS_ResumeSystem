@@ -15,30 +15,53 @@ from backend.api.routes import router
 
 logger=logging.getLogger('ats_resume_scorer')
 
-@asynccontextmanager
-async def lifespan(app:FastAPI):
-    logger.info('Starting ATS Resume Analyzer API...')
 
-    logger.info(f'Loading spaCy NLP model: {SPACY_MODEL_PRIMARY}')
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    import os
+    import time
     import spacy
+    from sentence_transformers import SentenceTransformer
+
+    logger.info("Starting ATS Resume Analyzer API...")
+
+    # Step 1: Load spaCy
+    start = time.time()
+    logger.info("Loading spaCy model: %s", SPACY_MODEL_PRIMARY)
+
     try:
         app.state.nlp = spacy.load(SPACY_MODEL_PRIMARY)
-        logger.info(f'Loaded {SPACY_MODEL_PRIMARY}')
+        logger.info("Loaded %s in %.1f seconds",
+                    SPACY_MODEL_PRIMARY, time.time() - start)
     except OSError:
-        logger.warning(f'{SPACY_MODEL_PRIMARY} not found — falling back to {SPACY_MODEL_SECONDARY}')
+        logger.warning("Primary spaCy model unavailable; trying %s",
+                       SPACY_MODEL_SECONDARY)
+        start = time.time()
         app.state.nlp = spacy.load(SPACY_MODEL_SECONDARY)
-        logger.info(f'Loaded {SPACY_MODEL_SECONDARY} (fallback)')
+        logger.info("Loaded fallback model in %.1f seconds",
+                    time.time() - start)
 
-    logger.info(f'Loading SentenceTransformer: {SENTENCE_TRANSFORMER_MODEL}')
-    from sentence_transformers import SentenceTransformer
-    app.state.embedder = SentenceTransformer(SENTENCE_TRANSFORMER_MODEL)
-    logger.info(f'Loaded {SENTENCE_TRANSFORMER_MODEL}')
+    # Step 2: Load Sentence Transformer
+    start = time.time()
+    hf_token = os.getenv("HF_TOKEN")
 
-    logger.info('All models loaded. API is ready to serve requests.')
+    logger.info("Loading SentenceTransformer: %s",
+                SENTENCE_TRANSFORMER_MODEL)
+    logger.info("HF_TOKEN configured: %s", bool(hf_token))
+
+    app.state.embedder = SentenceTransformer(
+        SENTENCE_TRANSFORMER_MODEL,
+        token=hf_token or None,
+    )
+
+    logger.info("Loaded SentenceTransformer in %.1f seconds",
+                time.time() - start)
+    logger.info("All models loaded. API is ready.")
 
     yield
 
-    logger.info('shutting down the api!!')
+    logger.info("Shutting down the API.")
+
 
 app=FastAPI(
     title=APP_TITLE, 
