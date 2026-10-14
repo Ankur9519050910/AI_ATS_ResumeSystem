@@ -13,7 +13,8 @@ from backend.core.config import(
 )
 from backend.api.routes import router
 
-logger=logging.getLogger('ats_resume_scorer')
+logging.basicConfig(level=logging.INFO, force=True)
+logger = logging.getLogger("ats_resume_scorer")
 
 
 @asynccontextmanager
@@ -23,6 +24,7 @@ async def lifespan(app: FastAPI):
     import spacy
     from sentence_transformers import SentenceTransformer
 
+    print("=== CUSTOM LIFESPAN STARTED ===", flush=True)
     logger.info("Starting ATS Resume Analyzer API...")
 
     # Step 1: Load spaCy
