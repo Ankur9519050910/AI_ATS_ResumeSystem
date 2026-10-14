@@ -74,7 +74,10 @@ SUPPORTED_EXTENSIONS = {
 # NLP / ML MODELS
 # ============================================================
 
-SPACY_MODEL_PRIMARY = "en_core_web_md"
+# SPACY_MODEL_PRIMARY = "en_core_web_md"
+# SPACY_MODEL_SECONDARY = "en_core_web_sm"
+
+SPACY_MODEL_PRIMARY = "en_core_web_sm"
 SPACY_MODEL_SECONDARY = "en_core_web_sm"
 
 SENTENCE_TRANSFORMER_MODEL = os.getenv(
