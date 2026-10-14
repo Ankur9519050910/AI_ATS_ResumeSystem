@@ -1,0 +1,22 @@
+﻿# Secrets and environment variables
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Runtime logs and temporary files
+backend/logs/
+uploads/
+temp/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Large local model
+/ml model/finetuned-mpnet/
