@@ -40,10 +40,7 @@ APP_DESCRIPTION = "Analyse resumes against job descriptions using NLP + ML"
 
 ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "http://127.0.0.1:5173",
-
-    # Keep this only if you still use the old Streamlit frontend.
-    # "https://appapppy-ktwxupi73vqhjzweksze9d.streamlit.app",
+    "http://127.0.0.1:5173"
 
     # Add your deployed React frontend later:
     # "https://your-react-app.vercel.app",
