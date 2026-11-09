@@ -14,10 +14,9 @@ from backend.core.config import (
     APP_VERSION,
     SPACY_MODEL_PRIMARY,
     SPACY_MODEL_SECONDARY,
-    SENTENCE_TRANSFORMER_MODEL,
+    SENTENCE_TRANSFORMER_MODEL
 )
 from backend.api.routes import router
-
 
 # ============================================================
 # LOGGING CONFIGURATION
@@ -149,19 +148,30 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-
 # ============================================================
 # CORS CONFIGURATION
 # ============================================================
 
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=ALLOWED_ORIGINS,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=[
+        "https://ai-ats-resume-system.vercel.app",
+        "http://localhost:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # ============================================================
 # ROUTES
@@ -183,7 +193,6 @@ async def root():
             "POST /api/v1/generate-pdf": "Generate PDF report from data",
         },
     }
-
 
 # ============================================================
 # LOCAL DEVELOPMENT
