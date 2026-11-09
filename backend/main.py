@@ -3,6 +3,7 @@ import logging
 import os
 import time
 from contextlib import asynccontextmanager
+from fastapi.middleware.cors import CORSMiddleware
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -152,15 +153,10 @@ app = FastAPI(
 # CORS CONFIGURATION
 # ============================================================
 
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=ALLOWED_ORIGINS,
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
 
-from fastapi.middleware.cors import CORSMiddleware
+# ============================================================
+# CORS CONFIGURATION
+# ============================================================
 
 app.add_middleware(
     CORSMiddleware,
@@ -172,6 +168,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # ============================================================
 # ROUTES
