@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
+import { supabase } from '../services/supabase'
 import './Auth.css'
 
 function Login() {
@@ -11,6 +12,7 @@ function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [googleLoading, setGoogleLoading] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -24,6 +26,25 @@ function Login() {
       setError(err.message || 'Unable to sign in. Please try again.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function handleGoogleLogin() {
+    setError('')
+    setGoogleLoading(true)
+
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`,
+        },
+      })
+
+      if (error) throw error
+    } catch (err) {
+      setError(err.message || 'Unable to sign in with Google.')
+      setGoogleLoading(false)
     }
   }
 
@@ -73,11 +94,24 @@ function Login() {
           <button
             className="auth-submit"
             type="submit"
-            disabled={loading}
+            disabled={loading || googleLoading}
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
+
+        <div className="auth-divider">
+          <span>OR</span>
+        </div>
+
+        <button
+          className="google-submit"
+          type="button"
+          onClick={handleGoogleLogin}
+          disabled={googleLoading || loading}
+        >
+          {googleLoading ? 'Connecting to Google...' : 'Continue with Google'}
+        </button>
 
         <p className="auth-switch">
           Don't have an account? <Link to="/register">Create one</Link>
