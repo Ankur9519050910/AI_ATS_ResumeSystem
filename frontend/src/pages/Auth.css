@@ -1,7 +1,10 @@
 
-/* =====================================
-   AUTH RESPONSIVE DESIGN
-===================================== */
+/* =========================================
+   RESUMEAI - AUTHENTICATION UI
+   Login | Register | Reset Password
+========================================= */
+
+/* Main authentication page */
 
 .auth-page {
   width: 100%;
@@ -11,8 +14,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-x: hidden;
+  overflow-x: clip;
+  background: linear-gradient(145deg, #faf8ff, #f3efff);
 }
+
+/* Authentication card */
 
 .auth-card {
   width: 100%;
@@ -20,35 +26,305 @@
   min-width: 0;
   margin: auto;
   padding: 36px;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #e9e1ff;
+  border-radius: 20px;
+  box-shadow:
+    0 12px 35px rgba(85, 55, 160, 0.06),
+    0 3px 10px rgba(85, 55, 160, 0.03);
+  transition: box-shadow 0.25s ease;
 }
+
+/* Brand */
+
+.auth-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #251747;
+  font-family: 'Manrope', sans-serif;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+}
+
+.auth-brand .brand-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #794dff, #4a27c7);
+  border-radius: 11px;
+  font-size: 16px;
+  box-shadow: 0 5px 14px rgba(103, 61, 232, 0.2);
+}
+
+/* Heading */
+
+.auth-heading {
+  margin: 36px 0 28px;
+}
+
+.auth-eyebrow {
+  margin: 0 0 12px;
+  color: #7040d8;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.auth-heading h1 {
+  margin: 0 0 11px;
+  color: #251747;
+  font-family: 'Manrope', sans-serif;
+  font-size: 27px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.8px;
+  overflow-wrap: break-word;
+}
+
+.auth-heading > p:last-child {
+  margin: 0;
+  color: #747087;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* Form */
 
 .auth-form {
   width: 100%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form label {
+  margin: 0 0 8px;
+  color: #38334e;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .auth-form input {
   width: 100%;
   min-width: 0;
   max-width: 100%;
+  min-height: 50px;
+  margin: 0 0 20px;
+  padding: 0 15px;
+  color: #251747;
+  background: #ffffff;
+  border: 1px solid #e3def0;
+  border-radius: 10px;
+  outline: none;
+  font-size: 13px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.auth-submit,
-.google-submit {
-  width: 100%;
-  min-height: 48px;
+.auth-form input::placeholder {
+  color: #a09bae;
 }
 
-.auth-heading h1 {
-  overflow-wrap: break-word;
+.auth-form input:focus {
+  border-color: #8055e9;
+  box-shadow: 0 0 0 4px rgba(103, 61, 232, 0.09);
 }
 
-.auth-error,
-.auth-success {
+/* Forgot password */
+
+.auth-forgot-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -9px;
+  margin-bottom: 15px;
+}
+
+.auth-form .auth-forgot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 4px 0;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: #7040d8;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.auth-form .auth-forgot:hover:not(:disabled) {
+  background: transparent;
+  color: #5124bd;
+  text-decoration: underline;
+}
+
+.auth-form .auth-forgot:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error message */
+
+.auth-error {
+  margin: 0 0 16px;
+  padding: 11px 12px;
+  color: #a12f2f;
+  background: #fff1ef;
+  border: 1px solid #f4d4cf;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
-/* Tablets */
+/* Success message */
+
+.auth-success {
+  margin: 0 0 16px;
+  padding: 12px;
+  color: #237a45;
+  background: #eaf7ee;
+  border: 1px solid #c7e8d0;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* Sign in / Register / Reset button */
+
+.auth-submit {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 2px;
+  padding: 10px 16px;
+  color: #ffffff;
+  background: linear-gradient(
+    110deg,
+    #673de8,
+    #943ce2 65%,
+    #cf43b8
+  );
+  border: none;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(103, 61, 232, 0.18);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.auth-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+  box-shadow: 0 11px 24px rgba(103, 61, 232, 0.24);
+}
+
+.auth-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* OR divider */
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: #858098;
+  font-size: 12px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e0ef;
+}
+
+/* Google button */
+
+.google-submit {
+  width: 100%;
+  min-height: 50px;
+  padding: 10px 16px;
+  border: 1px solid #e4def0;
+  border-radius: 11px;
+  background: #ffffff;
+  color: #30264c;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.google-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #f8f5ff;
+  border-color: #cbbaf7;
+}
+
+.google-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Account switch */
+
+.auth-switch {
+  margin: 24px 0 0;
+  color: #747087;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.auth-switch a {
+  color: #6538d8;
+  font-weight: 800;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+
+/* Back link */
+
+.auth-back {
+  display: block;
+  width: fit-content;
+  margin: 24px auto 0;
+  color: #747087;
+  font-size: 12px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.auth-back:hover {
+  color: #6538d8;
+}
+
+/* =========================================
+   TABLET RESPONSIVENESS
+========================================= */
+
 @media (max-width: 768px) {
   .auth-page {
     padding: 24px 18px;
@@ -64,9 +340,13 @@
   }
 }
 
-/* Mobile phones */
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
 @media (max-width: 480px) {
   .auth-page {
+    min-height: 100vh;
     min-height: 100dvh;
     padding: 16px 12px;
     align-items: center;
@@ -75,8 +355,8 @@
   .auth-card {
     width: 100%;
     max-width: 100%;
-    padding: 25px 20px;
-    border-radius: 12px;
+    padding: 27px 21px;
+    border-radius: 18px;
   }
 
   .auth-brand {
@@ -84,13 +364,17 @@
   }
 
   .auth-heading {
-    margin: 27px 0 24px;
+    margin: 29px 0 25px;
+  }
+
+  .auth-eyebrow {
+    font-size: 10px;
   }
 
   .auth-heading h1 {
     font-size: clamp(22px, 6vw, 26px);
     line-height: 1.3;
-    letter-spacing: -0.6px;
+    letter-spacing: -0.7px;
   }
 
   .auth-heading > p:last-child {
@@ -103,9 +387,11 @@
   }
 
   .auth-form input {
-    min-height: 48px;
+    min-height: 49px;
     margin-bottom: 18px;
+    padding: 0 13px;
     font-size: 14px;
+    border-radius: 9px;
   }
 
   .auth-forgot-wrapper {
@@ -118,13 +404,10 @@
     min-height: 32px;
   }
 
-  .auth-submit {
-    min-height: 48px;
-    font-size: 14px;
-  }
-
+  .auth-submit,
   .google-submit {
-    min-height: 48px;
+    min-height: 49px;
+    border-radius: 10px;
     font-size: 13px;
   }
 
@@ -142,7 +425,10 @@
   }
 }
 
-/* Very small phones */
+/* =========================================
+   VERY SMALL MOBILE SCREENS
+========================================= */
+
 @media (max-width: 360px) {
   .auth-page {
     padding: 12px 9px;
@@ -150,13 +436,32 @@
 
   .auth-card {
     padding: 22px 16px;
+    border-radius: 15px;
+  }
+
+  .auth-brand {
+    font-size: 16px;
   }
 
   .auth-heading h1 {
     font-size: 22px;
   }
 
-  .auth-brand {
-    font-size: 16px;
+  .auth-form input {
+    font-size: 13px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-card,
+  .auth-form input,
+  .auth-submit,
+  .google-submit,
+  .auth-back {
+    transition: none;
   }
 }
