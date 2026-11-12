@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
@@ -11,12 +12,15 @@ function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [googleLoading, setGoogleLoading] = useState(false)
+  const [resetLoading, setResetLoading] = useState(false)
 
   async function handleSubmit(event) {
     event.preventDefault()
     setError('')
+    setMessage('')
     setLoading(true)
 
     try {
@@ -29,8 +33,40 @@ function Login() {
     }
   }
 
+  async function handleForgotPassword() {
+    setError('')
+    setMessage('')
+
+    if (!email.trim()) {
+      setError('Please enter your registered email address first.')
+      return
+    }
+
+    setResetLoading(true)
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(
+        email.trim(),
+        {
+          redirectTo: `${window.location.origin}/reset-password`,
+        }
+      )
+
+      if (error) throw error
+
+      setMessage(
+        'Password reset instructions have been sent. Please check your email.'
+      )
+    } catch (err) {
+      setError(err.message || 'Unable to send password reset email.')
+    } finally {
+      setResetLoading(false)
+    }
+  }
+
   async function handleGoogleLogin() {
     setError('')
+    setMessage('')
     setGoogleLoading(true)
 
     try {
@@ -85,16 +121,33 @@ function Login() {
             required
           />
 
+          <div className="auth-forgot-wrapper">
+            <button
+              type="button"
+              className="auth-forgot"
+              onClick={handleForgotPassword}
+              disabled={resetLoading || loading || googleLoading}
+            >
+              {resetLoading ? 'Sending reset link...' : 'Forgot password?'}
+            </button>
+          </div>
+
           {error && (
             <p className="auth-error" role="alert">
               {error}
             </p>
           )}
 
+          {message && (
+            <p className="auth-success" role="status">
+              {message}
+            </p>
+          )}
+
           <button
             className="auth-submit"
             type="submit"
-            disabled={loading || googleLoading}
+            disabled={loading || googleLoading || resetLoading}
           >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
@@ -108,9 +161,11 @@ function Login() {
           className="google-submit"
           type="button"
           onClick={handleGoogleLogin}
-          disabled={googleLoading || loading}
+          disabled={googleLoading || loading || resetLoading}
         >
-          {googleLoading ? 'Connecting to Google...' : 'Continue with Google'}
+          {googleLoading
+            ? 'Connecting to Google...'
+            : 'Continue with Google'}
         </button>
 
         <p className="auth-switch">

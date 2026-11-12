@@ -5,6 +5,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import './App.css'
 import Analyze from './pages/Analyze'
+import ResetPassword from './pages/ResetPassword'
 
 import SavedAnalysisResult from './pages/SavedAnalysisResult'
 
@@ -255,10 +256,13 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="*" element={<NotFound />} />
       <Route path="/analyze" element={<Analyze />} />
-
       <Route
         path="/saved-results/:analysisId"
         element={<SavedAnalysisResult />}
+      />
+      <Route
+        path="/reset-password"
+        element={<ResetPassword />}
       />
 
     </Routes>
